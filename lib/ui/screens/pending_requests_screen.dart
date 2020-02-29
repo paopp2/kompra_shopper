@@ -106,7 +106,7 @@ class _PendingRequestsScreenState extends State<PendingRequestsScreen> {
   @override
   Widget build(BuildContext context) {
 
-    var locationOptions = LocationOptions(accuracy: LocationAccuracy.bestForNavigation, distanceFilter: 5);
+    var locationOptions = LocationOptions(accuracy: LocationAccuracy.bestForNavigation, distanceFilter: 15);
     if(Provider.of<CurrentUser>(context, listen: false).shopper != null) setState(() {
       shopperEmail = Provider.of<CurrentUser>(context, listen: false).shopper.shopperEmail;
     });
