@@ -10,6 +10,7 @@ import 'package:kompra_shopper/ui/screens/grocery_list_screen.dart';
 import 'package:kompra_shopper/ui/screens/loading_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:kompra_shopper/domain/distance_and_travel_time.dart';
+import 'order_summary_table.dart';
 
 class RequestTile extends StatelessWidget {
   const RequestTile({
@@ -25,7 +26,7 @@ class RequestTile extends StatelessWidget {
       constraints: constraints,
       isExpanded: isExpanded,
       transaction: transaction,
-      deliveryFee: 69,
+      deliveryFee: transaction.serviceFee,
     );
   }
 
@@ -54,7 +55,6 @@ class RequestTileContent extends StatefulWidget {
     @required this.constraints,
     @required this.isExpanded,
     @required this.transaction,
-    //TODO: Set delivery fee in request tile
     @required this.deliveryFee,
   }) : super(key: key);
 
@@ -101,7 +101,8 @@ class _RequestTileContentState extends State<RequestTileContent> {
     }
     TextEditingController issueController = TextEditingController();
     TextEditingController priceController = TextEditingController();
-    issueController.text = widget.transaction.groceryList;
+//    issueController.text = widget.transaction.groceryList;
+//    issueController.text = 'temporary: change this shit';
     priceController.text = 'Php ${widget.deliveryFee}';
     final _formKey = GlobalKey<FormState>();
 
@@ -156,16 +157,26 @@ class _RequestTileContentState extends State<RequestTileContent> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                TextField(
-                  readOnly: true,
-                  maxLines: 10,
-                  controller: issueController,
-                  decoration: kDefaultTextFieldFormDecoration.copyWith(
-                    labelText: 'Grocery List',
-                    alignLabelWithHint: true,
-                  ),
-                  style: TextStyle(
-                    height: 1.5,
+//                TextField(
+//                  readOnly: true,
+//                  maxLines: 10,
+//                  controller: issueController,
+//                  decoration: kDefaultTextFieldFormDecoration.copyWith(
+//                    labelText: 'Grocery List',
+//                    alignLabelWithHint: true,
+//                  ),
+//                  style: TextStyle(
+//                    height: 1.5,
+//                  ),
+//                ),
+                Container(
+                  height: 200,
+                  child: ListView(
+                    children: <Widget>[
+                      OrderSummaryTable(
+                        itemMap: widget.transaction.groceryList,
+                      ),
+                    ],
                   ),
                 ),
                 SizedBox(height: 15,),

@@ -160,9 +160,12 @@ class _PendingRequestsScreenState extends State<PendingRequestsScreen> {
             groceryList: doc.data['groceryList'],
             phase: EnumToString.fromString(my.TransactionPhase.values, doc.data['transactionPhase']),
             docID: doc.documentID,
+            serviceFee: doc.data['serviceFee'],
+            totalPrice: doc.data['totalPrice'],
           );
         if(!transactions.contains(temp)) {
           transactions.add(temp);
+          print('itemname: ${temp.groceryList[0]['itemName']}');
         }
       }
     }

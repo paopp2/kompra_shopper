@@ -4,6 +4,7 @@ import 'package:kompra_shopper/domain/models/transaction.dart';
 import 'package:kompra_shopper/ui/components/floating_action_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:kompra_shopper/constants.dart';
+import 'package:kompra_shopper/ui/components/order_summary_table.dart';
 import 'package:kompra_shopper/ui/providers/providers.dart';
 import 'package:kompra_shopper/ui/screens/goto_client_screen.dart';
 import 'package:provider/provider.dart';
@@ -30,7 +31,7 @@ class _GroceryListScreenState extends State<GroceryListScreen> {
     TextEditingController clientNameTextFieldController = TextEditingController();
     clientNameTextFieldController.text = Provider.of<AcceptedTransaction>(context, listen: false).transaction.client.clientName;
     locationTextFieldController.text = Provider.of<AcceptedTransaction>(context, listen: false).transaction.locationName;
-    groceryListTextFieldController.text = Provider.of<AcceptedTransaction>(context, listen: false).transaction.groceryList;
+//    groceryListTextFieldController.text = Provider.of<AcceptedTransaction>(context, listen: false).transaction.groceryList;
 //    locationTextFieldFormController.text = Provider.of<AcceptedTransaction>(context, listen: false).transaction.locationName;
 
     return LayoutBuilder(
@@ -45,76 +46,156 @@ class _GroceryListScreenState extends State<GroceryListScreen> {
           body: ListView(
             children: <Widget>[
               SizedBox(height: 30,),
-              Container(
-                height: constraints.maxHeight * 0.8,
-                width: constraints.maxWidth * 0.9,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    vertical: 15,
-                    horizontal: 30,
+//              Container(
+//                height: constraints.maxHeight * 0.8,
+//                width: constraints.maxWidth * 0.9,
+//                child: Padding(
+//                  padding: EdgeInsets.symmetric(
+//                    vertical: 15,
+//                    horizontal: 30,
+//                  ),
+//                  child: ListView(
+//                    children: <Widget>[
+//                      TextFormField(
+//                        maxLines: 1,
+//                        readOnly: true,
+//                        controller: clientNameTextFieldController,
+//                        decoration: kDefaultTextFieldFormDecoration.copyWith(
+//                            labelText: 'Client Name'
+//                        ),
+//                        onTap: () {
+//                          Navigator.pop(context);
+//                        },
+//                      ),
+//                      SizedBox(height: 15,),
+//                      TextFormField(
+//                        maxLines: 2,
+//                        readOnly: true,
+//                        controller: locationTextFieldController,
+//                        decoration: kDefaultTextFieldFormDecoration.copyWith(
+//                            labelText: 'Address'
+//                        ),
+//                        onTap: () {
+//                          Navigator.pop(context);
+//                        },
+//                      ),
+//                      Padding(
+//                        padding: EdgeInsets.symmetric(
+//                          horizontal: 10,
+//                          vertical: 15,
+//                        ),
+//                        child: LinearPercentIndicator(
+//                          animation: true,
+//                          lineHeight: 40,
+//                          animationDuration: 500,
+//                          animateFromLastPercent: true,
+//                          percent: progress,
+//                          center: Text(
+//                            kGroceryPhases[index]['progressMessage'],
+//                            style: TextStyle(
+//                              color: Colors.white,
+//                            ),
+//                          ),
+//                          linearStrokeCap: LinearStrokeCap.roundAll,
+//                          progressColor: kPrimaryColor,
+//                          backgroundColor: kAccentColor,
+//                        ),
+//                      ),
+//                      TextField(
+//                        onChanged: (value) {
+//                          _groceryList = value;
+//                        },
+//                        readOnly: true,
+//                        maxLines: 10,
+//                        controller: groceryListTextFieldController,
+//                        decoration: kDefaultTextFieldFormDecoration.copyWith(
+//                          labelText: 'Grocery List',
+//                          alignLabelWithHint: true,
+//                          hintText: 'Enter your grocery list in bullet form',
+//                        ),
+//                        style: TextStyle(
+//                          height: 1.5,
+//                        ),
+//                      ),
+//                    ],
+//                  ),
+//                ),
+//              ),
+              LinearPercentIndicator(
+                animation: true,
+                lineHeight: 40,
+                animationDuration: 500,
+                animateFromLastPercent: true,
+                percent: progress,
+                center: Text(
+                  kGroceryPhases[index]['progressMessage'],
+                  style: TextStyle(
+                    color: Colors.white,
                   ),
-                  child: ListView(
+                ),
+                linearStrokeCap: LinearStrokeCap.roundAll,
+                progressColor: kPrimaryColor,
+                backgroundColor: kAccentColor,
+              ),
+              Card(
+                elevation: 10,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      TextFormField(
-                        maxLines: 1,
-                        readOnly: true,
-                        controller: clientNameTextFieldController,
-                        decoration: kDefaultTextFieldFormDecoration.copyWith(
-                            labelText: 'Client Name'
-                        ),
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                      SizedBox(height: 15,),
-                      TextFormField(
-                        maxLines: 2,
-                        readOnly: true,
-                        controller: locationTextFieldController,
-                        decoration: kDefaultTextFieldFormDecoration.copyWith(
-                            labelText: 'Address'
-                        ),
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 15,
-                        ),
-                        child: LinearPercentIndicator(
-                          animation: true,
-                          lineHeight: 40,
-                          animationDuration: 500,
-                          animateFromLastPercent: true,
-                          percent: progress,
-                          center: Text(
-                            kGroceryPhases[index]['progressMessage'],
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                          linearStrokeCap: LinearStrokeCap.roundAll,
-                          progressColor: kPrimaryColor,
-                          backgroundColor: kAccentColor,
-                        ),
-                      ),
-                      TextField(
-                        onChanged: (value) {
-                          _groceryList = value;
-                        },
-                        readOnly: true,
-                        maxLines: 10,
-                        controller: groceryListTextFieldController,
-                        decoration: kDefaultTextFieldFormDecoration.copyWith(
-                          labelText: 'Grocery List',
-                          alignLabelWithHint: true,
-                          hintText: 'Enter your grocery list in bullet form',
-                        ),
+                      Text(
+                        'Delivery',
                         style: TextStyle(
-                          height: 1.5,
+                          fontWeight: FontWeight.bold,
                         ),
+                      ),
+                      SizedBox(height: 10,),
+                      Text(
+                          Provider.of<AcceptedTransaction>(context, listen: false).transaction.locationName
+                      ),
+                      Divider(),
+                      Text(
+                        'Order Summary',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 10,),
+                      Container(
+                        height: constraints.maxHeight * 1/3.2,
+                        child: ListView(
+                          children: <Widget>[
+                            OrderSummaryTable(
+                              itemMap: Provider.of<AcceptedTransaction>(context, listen: false).transaction.groceryList,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Divider(),
+                      Text(
+                        'Service Fee',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 10,),
+                      Center(
+                        child: Text('₱${Provider.of<AcceptedTransaction>(context, listen: false).transaction.serviceFee}'),
+                      ),
+                      Divider(),
+                      Text(
+                        'Total',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 10,),
+                      Center(
+                        child: Text('₱${Provider.of<AcceptedTransaction>(context, listen: false).transaction.totalPrice}'),
                       ),
                     ],
                   ),

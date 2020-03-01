@@ -25,6 +25,8 @@ class Transaction {
     this.phase,
     this.docID,
     this.shopperLocation,
+    this.serviceFee,
+    this.totalPrice,
   });
 
   Client client;
@@ -32,10 +34,12 @@ class Transaction {
   var location;
   LatLng shopperLocation;
   Timestamp timestamp;
-  String groceryList;
+  List<dynamic> groceryList;
   String locationName;
   TransactionPhase phase;
   String docID;
+  double serviceFee;
+  double totalPrice;
 
   @override
   String toString() {
