@@ -9,6 +9,7 @@ import 'package:kompra_shopper/domain/models/client.dart';
 import 'package:flutter/material.dart';
 import 'package:kompra_shopper/constants.dart';
 import 'package:connectivity/connectivity.dart';
+import 'package:kompra_shopper/ui/components/kompra_scaffold.dart';
 import 'package:kompra_shopper/ui/components/request_tile.dart';
 import 'package:kompra_shopper/ui/providers/providers.dart';
 import 'package:kompra_shopper/ui/screens/welcome_screen.dart';
@@ -17,6 +18,7 @@ import 'package:enum_to_string/enum_to_string.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:kompra_shopper/domain/location.dart' as my;
 import 'package:geoflutterfire/geoflutterfire.dart';
+import 'package:kompra_shopper/ui/components/custom_icon_button.dart';
 
 class PendingRequestsScreen extends StatefulWidget {
   static String id = 'pending_requests_screen';
@@ -182,25 +184,26 @@ class _PendingRequestsScreenState extends State<PendingRequestsScreen> {
               transaction: trans,
             ));
           }
-          return Scaffold(
-            appBar: AppBar(
-              title: SizedBox(
-                child: kKompraShopperWordLogoWhite,
-                height: 35,
-              ),
-              leading: IconButton(
-                icon: Icon(
-                  Icons.menu,
-                  color: Colors.white,
+          return KompraScaffold(
+            constraints: constraints,
+            customAppbarRow: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                CustomIconButton(
+                  iconData: Icons.menu,
+                  constraints: constraints,
+                  onPressed: () {
+                    //TODO: Implement home menu (temp: sign out currentUser)
+                  },
                 ),
-                onPressed: () {
-                  //TODO: Menu
-                },
-              ),
-              backgroundColor: kDarkerAccentColor,
-              actions: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.more_vert),
+                SizedBox(
+                  height: 25,
+                  child: kKompraShopperWordLogoWhite,
+                ),
+                CustomIconButton(
+                  iconData: Icons.more_vert,
+                  constraints: constraints,
                   onPressed: () {
                     FirebaseTasks.signOut();
                     positionStream.cancel();
@@ -212,32 +215,32 @@ class _PendingRequestsScreenState extends State<PendingRequestsScreen> {
                         .of<CurrentUser>(context, listen: false)
                         .shopper}');
                   },
-                ),
+                )
               ],
             ),
             body: Padding(
               padding: EdgeInsets.all(20),
               //TODO: Change to Listview.builder
               child: (requestTiles.length == 0) ?
-                Center(
-                    child: Text('No pending requests'),
-                ) :
-                Column(
-                  children: <Widget>[
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Expanded(
-                      child: Container(
-                        child: ListView.builder(
-                          itemCount: requestTiles.length,
-                          itemBuilder: (context, index) {
-                            return requestTiles[index];
-                          },
-                        ),
+              Center(
+                child: Text('No pending requests'),
+              ) :
+              Column(
+                children: <Widget>[
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Expanded(
+                    child: Container(
+                      child: ListView.builder(
+                        itemCount: requestTiles.length,
+                        itemBuilder: (context, index) {
+                          return requestTiles[index];
+                        },
                       ),
                     ),
-                  ],
+                  ),
+                ],
               ),
             ),
           );
